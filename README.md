@@ -11,6 +11,11 @@ Run elastic stack locally
 podman-compose up -d
 ```
 
+Run application
+```bash
+mvn quarkus:dev
+```
+
 Create ingest pipeline
 ```json
 DELETE _ingest/pipeline/attachment
