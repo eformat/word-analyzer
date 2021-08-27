@@ -33,7 +33,7 @@ public class SearchResource {
     @Inject
     RestClient restClient;
 
-    @ConfigProperty(name = "search.max.results", defaultValue = "10")
+    @ConfigProperty(name = "search.max.results", defaultValue = "100")
     int searchMaxResults;
 
     @Query(value = "query")

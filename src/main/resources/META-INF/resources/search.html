@@ -62,7 +62,7 @@
 
         .left-column {
             padding: .75rem;
-            max-width: 75%;
+            max-width: 100%;
             min-width: 55%;
         }
 
@@ -105,6 +105,12 @@
             font-weight: 200;
         }
     </style>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.js"></script>
+
 </head>
 <body>
 
@@ -114,16 +120,85 @@
 
 <div class="container">
     <div class="left-column">
-        <p class="lead">This page is served by Quarkus</p>
-        <ul>
-            <li><a href="/search.html">Search Reports</a></li>
-            <li><a href="/q/graphql-ui">Open GraphQL Web-UI</a></li>
-            <li><a href="/q/swagger-ui">Open API Documentation</a></li>
-            <li><a href="/q/health">Health</a></li>
-            <li><a href="/q/metrics">Metrics</a></li>
-        </ul>
+        <div>
+            <p class="lead">📚 Search the report documents 📚</p>
+            <p>Try searching for a term and hit <em>Enter</em></p>
+            <div class="table">
+                <table style="width: 100%;" id="queuetable" class="display compact">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>filename</th>
+                        <th>url</th>
+                        <th>score</th>
+                        <th>highlight</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
+<script type="application/javascript">
+
+    // initialize datatable
+    $('#queuetable').DataTable({
+      search: {
+        return: true
+      },
+      serverSide: true,
+      ajax: {
+        url: '/datatable',
+        timeout: 20000
+      },
+      fixedColumns: false,
+      columnDefs: [
+      { targets: 1,
+        render: function(data) {
+          return '<a href="'+ data + '" target="_blank">' + data.substring(0,35) + '</a>';
+        }
+      },
+      { targets: 2,
+        render: function(data) {
+          return data.toPrecision(4);
+        }
+      }
+      ],
+      data: [],
+      lengthChange: true,
+      lengthMenu: [ 5, 10, 25, 50, "All" ],
+      pageLength: 5,
+      columns: [
+        {
+          name: 'filename',
+          data: 'filename'
+        },
+        {
+          name: 'url',
+          data: 'url'
+        },
+        {
+          name: 'score',
+          data: 'score'
+        },
+        {
+          name: 'highlight',
+          data: 'highlight'
+        }
+      ]
+    });
+
+</script>
 
 </body>
 </html>
