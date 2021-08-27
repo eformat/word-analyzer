@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>word-aanalyzer</title>
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem
+        }
+
+        h3 {
+            font-size: 1.75rem
+
+        }
+
+        h4 {
+            font-size: 1.5rem
+        }
+
+        h5 {
+            font-size: 1.25rem
+        }
+
+        h6 {
+            font-size: 1rem
+        }
+
+        .lead {
+            font-weight: 300;
+            font-size: 2rem;
+        }
+
+        .banner {
+            font-size: 2.7rem;
+            margin: 0;
+            padding: 2rem 1rem;
+            background-color: #0d1c2c;
+            color: white;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        code {
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 87.5%;
+            color: #e83e8c;
+            word-break: break-word;
+        }
+
+        .left-column {
+            padding: .75rem;
+            max-width: 75%;
+            min-width: 55%;
+        }
+
+        .right-column {
+            padding: .75rem;
+            max-width: 25%;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        li {
+            margin: 0.75rem;
+        }
+
+        .right-section {
+            margin-left: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .right-section h3 {
+            padding-top: 0;
+            font-weight: 200;
+        }
+
+        .right-section ul {
+            border-left: 0.3rem solid #71aeef;
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .example-code {
+            border-left: 0.3rem solid #71aeef;
+            padding-left: 10px;
+        }
+
+        .example-code h3 {
+            font-weight: 200;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.js"></script>
+
+</head>
+<body>
+
+<div class="banner lead">
+    Welcome to Word Analyzer !
+</div>
+
+<div class="container">
+    <div class="left-column">
+        <p class="lead">This page is served by Quarkus</p>
+        <ul>
+            <li><a href="/q/graphql-ui">Open GraphQL Web-UI</a></li>
+            <li><a href="/q/swagger-ui">Open API Documentation</a></li>
+            <li><a href="/q/health">Health</a></li>
+            <li><a href="/q/metrics">Metrics</a></li>
+        </ul>
+
+        <div>
+            <p class="lead">📚 Here are the documents 📚</p>
+            <div class="table">
+                <table style="width: 100%;" id="queuetable" class="display compact">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>filename</th>
+                        <th>url</th>
+                        <th>score</th>
+                        <th>highlight</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="right-column">
+        <div class="right-section">
+            <h3>Next steps</h3>
+            <ul>
+                <li><a href="https://quarkus.io/guides/maven-tooling.html">Setup your IDE</a></li>
+                <li><a href="https://quarkus.io/guides/getting-started.html">Getting started</a></li>
+                <li><a href="https://quarkus.io">Quarkus Web Site</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script type="application/javascript">
+
+    // initialize datatable
+    $('#queuetable').DataTable({
+      search: {
+        return: true
+      },
+      serverSide: true,
+      ajax: {
+        url: '/datatable',
+        timeout: 20000
+      },
+      fixedColumns: false,
+      columnDefs: [
+      { targets: 1,
+        render: function(data) {
+          return '<a href="'+ data + '" target="_blank">' + data.substring(0,35) + '</a>';
+        }
+      },
+      { targets: 2,
+        render: function(data) {
+          return data.toPrecision(4);
+        }
+      }
+      ],
+      data: [],
+      lengthChange: true,
+      lengthMenu: [ 5, 10, 25, 50, "All" ],
+      pageLength: 5,
+      columns: [
+        {
+          name: 'filename',
+          data: 'filename'
+        },
+        {
+          name: 'url',
+          data: 'url'
+        },
+        {
+          name: 'score',
+          data: 'score'
+        },
+        {
+          name: 'highlight',
+          data: 'highlight'
+        }
+      ]
+    });
+
+</script>
+
+</body>
+</html>

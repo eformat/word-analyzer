@@ -1,0 +1,28 @@
+{
+  "_source": [
+    "filename",
+    "url"
+  ],
+  "highlight": {
+    "pre_tags" : ["<b>"],
+    "post_tags" : ["</b>"],
+    "fields": {
+      "attachment.content": {}
+    }
+  },
+  "query": {
+    "match_phrase": { "attachment.content": "foobar" }
+  },
+  "aggregations": {
+    "event_storming": {
+      "sampler": {
+        "shard_size": 100
+      },
+      "aggregations": {
+        "keywords": {
+          "significant_text": { "field": "attachment.content" }
+        }
+      }
+    }
+  }
+}
