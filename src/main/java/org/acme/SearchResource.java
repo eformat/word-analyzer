@@ -77,7 +77,7 @@ public class SearchResource {
         // make low level query request
         Request request = new Request(
                 "POST",
-                "/engagements/_search");
+                "/engagements-read/_search");
         request.setJsonEntity(queryJson);
         final String jquery = queryJson.toString();
 
