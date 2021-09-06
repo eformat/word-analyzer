@@ -1,0 +1,13 @@
+apiVersion: v2
+name: word-analyzer
+description: Word Analyzer
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+home: https://labs/helm-charts
+icon: https://avatars1.githubusercontent.com/u/68044996?s=200&v=4
+kubeVersion: '>=1.11.0-0'
+keywords:
+- search
+maintainers:
+- name: mhepburn

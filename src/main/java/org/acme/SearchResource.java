@@ -37,7 +37,7 @@ public class SearchResource {
     int searchMaxResults;
 
     @Query(value = "query")
-    @Description("Search address by search term")
+    @Description("Search document by search term")
     public Uni<List<SearchData>> query(@Name("search") String search, @Name("size") Optional<Integer> size) {
         String finalSearch = (search == null) ? "" : search.trim().toLowerCase();
         log.debug(">>> Final Search Words: finalSearch(" + finalSearch + ")");

@@ -136,3 +136,24 @@ POST _reindex
   }
 }
 ```
+
+## Run on OpenShift
+
+Create project
+```bash
+oc new-project engagements-dev
+```
+
+Elasticsearch deployed from [HERE](https://github.com/eformat/document-loader-service/tree/main/elastic)
+
+Create Secrets
+```bash
+oc -n engagements-dev create secret generic word-analyzer \
+  --from-literal=elastic-password=$(oc get secret engagements-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 -d)
+```
+
+Deploy application
+```bash
+helm repo add eformat https://eformat.github.io/helm-charts
+helm upgrade --install word-analyzer eformat/word-analyzer
+```

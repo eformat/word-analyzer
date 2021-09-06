@@ -1,0 +1,92 @@
+{{- if (ne .Values.deploymentConfig true) }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "word-analyzer.fullname" . }}
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"{{ include "word-analyzer.fullname" . }}:{{ .Values.image_version }}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"word-analyzer\")].image"}]'
+  labels:
+    {{- include "word-analyzer.labels" . | nindent 4 }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: {{ .Values.replicas.min }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      {{- include "word-analyzer.selectorLabels" . | nindent 6 }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '8080'
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        {{- include "word-analyzer.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - env:
+            - name: JAVA_MAX_MEM_RATIO
+              value: "50"
+            - name: QUARKUS_PROFILE
+              value: prod
+            - name: QUARKUS_LOG_LEVEL
+              value: INFO
+            - name: QUARKUS_ELASTICSEARCH_HOSTS
+              value: {{ .Values.elasticsearch_hosts | quote }}
+            - name: QUARKUS_ELASTICSEARCH_USERNAME
+              value: {{ .Values.elasticsearch_username | quote }}
+            - name: QUARKUS_ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: elastic-password
+                  name: {{ include "word-analyzer.fullname" . }}
+            - name: QUARKUS_ELASTICSEARCH_PROTOCOL
+              value: {{ .Values.elasticsearch_protocol | quote }}
+          image: ' '
+          imagePullPolicy: Always
+          name: {{ include "word-analyzer.name" . }}
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          resources:
+            limits:
+              cpu: '1000m'
+              memory: 2048Mi
+            requests:
+              cpu: '100m'
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+{{ end }}
