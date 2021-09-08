@@ -45,41 +45,8 @@ public class SearchDataTable {
             @QueryParam(value = "start") @DefaultValue("0") int start,
             @QueryParam(value = "length") @DefaultValue("10") int length,
             @QueryParam(value = "search[value]") String searchVal) throws Exception {
-        // Begin result
         DataTable result = new DataTable();
-        result.setDraw(draw);
-        log.info(">> datatable {draw:" + draw + ", start:" + start + ", length: " + length + ", search: " + searchVal + "}");
-
-        // Filter based on search
-        Document query = document(
-                operation(
-                        field("query",
-                                args(arg("search", searchVal), arg("size", 100)),
-                                field("filename"),
-                                field("score"),
-                                field("url"),
-                                field("highlight")
-                        )
-                ));
-        Response response;
-        try {
-            response = searchClient.executeSync(query);
-        } catch (Exception ex) {
-            log.warn("caught exception calling ES " + ex);
-            return result;
-        }
-        List<SearchData> searchData = response.getList(SearchData.class, "query");
-        int end = (length <= searchData.size() ? length : searchData.size());
-        if (start > 0) {
-            end = start + (length <= searchData.size() ? length : searchData.size());
-            if (end > searchData.size())
-                end = searchData.size();
-        }
-        log.info(">> start: " + start + " end: " + end + " searchData.zize(): " + searchData.size());
-        List<SearchData> subList = searchData.subList(start, end);
-        result.setData(subList);
-        result.setRecordsFiltered(searchData.size());
-        result.setRecordsTotal(searchData.size());
+        _datatable(draw, start, length, searchVal, result);
         return result;
     }
 
@@ -94,39 +61,14 @@ public class SearchDataTable {
             @QueryParam(value = "start") @DefaultValue("0") int start,
             @QueryParam(value = "length") @DefaultValue("10") int length,
             @QueryParam(value = "search[value]") String searchVal) throws Exception {
-        // Begin result
         DataTable result = new DataTable();
-        result.setDraw(draw);
-        log.info(">> datatable {draw:" + draw + ", start:" + start + ", length: " + length + ", search: " + searchVal + "}");
-
-        // Filter based on search
-        Document query = document(
-                operation(
-                        field("query",
-                                args(arg("search", searchVal), arg("size", 100)),
-                                field("filename"),
-                                field("score"),
-                                field("url"),
-                                field("highlight")
-                        )
-                ));
-        Response response;
         try {
-            response = searchClient.executeSync(query);
+            _datatable(draw, start, length, searchVal, result);
         } catch (Exception ex) {
             log.warn("caught exception calling ES " + ex);
             return h1("No Data Found").render();
         }
-        List<SearchData> searchData = response.getList(SearchData.class, "query");
-        int end = (length <= searchData.size() ? length : searchData.size());
-        if (start > 0) {
-            end = start + (length <= searchData.size() ? length : searchData.size());
-            if (end > searchData.size())
-                end = searchData.size();
-        }
-        log.info(">> start: " + start + " end: " + end + " searchData.zize(): " + searchData.size());
-        List<SearchData> subList = searchData.subList(start, end);
-        // class="display compact dataTable no-footer"
+        List<SearchData> subList = result.getData();
         AtomicInteger cnt = new AtomicInteger(1);
         ContainerTag html = head().with(
                 link().withRel("stylesheet").withHref("https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css"),
@@ -155,6 +97,37 @@ public class SearchDataTable {
         );
         String render = html.render();
         return StringEscapeUtils.unescapeHtml4(render);
+    }
+
+    private void _datatable(int draw, int start, int length, String searchVal, DataTable result) throws Exception {
+        // Begin result
+        result.setDraw(draw);
+        log.info(">> datatable {draw:" + draw + ", start:" + start + ", length: " + length + ", search: " + searchVal + "}");
+
+        // Filter based on search
+        Document query = document(
+                operation(
+                        field("query",
+                                args(arg("search", searchVal), arg("size", 100)),
+                                field("filename"),
+                                field("score"),
+                                field("url"),
+                                field("highlight")
+                        )
+                ));
+        Response response = searchClient.executeSync(query);
+        List<SearchData> searchData = response.getList(SearchData.class, "query");
+        int end = (length <= searchData.size() ? length : searchData.size());
+        if (start > 0) {
+            end = start + (length <= searchData.size() ? length : searchData.size());
+            if (end > searchData.size())
+                end = searchData.size();
+        }
+        log.info(">> start: " + start + " end: " + end + " searchData.zize(): " + searchData.size());
+        List<SearchData> subList = searchData.subList(start, end);
+        result.setData(subList);
+        result.setRecordsFiltered(searchData.size());
+        result.setRecordsTotal(searchData.size());
     }
 
 }
