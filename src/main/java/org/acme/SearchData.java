@@ -14,6 +14,7 @@ public class SearchData implements Comparable {
     private String url;
     private BigDecimal score;
     private String highlight;
+    private String fileId;
 
     public String getFilename() {
         return filename;
@@ -47,17 +48,25 @@ public class SearchData implements Comparable {
         this.highlight = highlight;
     }
 
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SearchData that = (SearchData) o;
-        return Objects.equals(filename, that.filename) && Objects.equals(url, that.url) && Objects.equals(score, that.score) && Objects.equals(highlight, that.highlight);
+        return Objects.equals(filename, that.filename) && Objects.equals(url, that.url) && Objects.equals(score, that.score) && Objects.equals(highlight, that.highlight) && Objects.equals(fileId, that.fileId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(filename, url, score, highlight);
+        return Objects.hash(filename, url, score, highlight, fileId);
     }
 
     @Override
@@ -67,6 +76,7 @@ public class SearchData implements Comparable {
                 ", url='" + url + '\'' +
                 ", score=" + score +
                 ", highlight='" + highlight + '\'' +
+                ", fileId='" + fileId + '\'' +
                 '}';
     }
 
@@ -78,4 +88,5 @@ public class SearchData implements Comparable {
         SearchData other = (SearchData) o;
         return this.score.compareTo(other.score);
     }
+
 }

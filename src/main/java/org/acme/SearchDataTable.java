@@ -112,7 +112,8 @@ public class SearchDataTable {
                                 field("filename"),
                                 field("score"),
                                 field("url"),
-                                field("highlight")
+                                field("highlight"),
+                                field("fileId")
                         )
                 ));
         Response response = searchClient.executeSync(query);
