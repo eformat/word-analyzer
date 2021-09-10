@@ -49,6 +49,7 @@
         body {
             margin: 0;
             font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            overflow-x: hidden;
         }
         code {
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -73,26 +74,17 @@
 		    border: none;
 		    max-width: 100%;
 	    }
-        .column {
-          float: left;
-          width: 33.33%;
+        .column-left {
+            float: left;
+            width: 66.666%;
         }
-        .left, .right {
-          width: 25%;
-        }
-        .middle {
-          width: 50%;
+        .column-right {
+            float: right;
+            width: 30.333%;
         }
         .dataTables_filter, .dataTables_info {
             display: none;
         }
-        @media screen and (max-width: 600px) {
-          .column
-            width: 100%;
-          }
-        }
-
-
     </style>
 </head>
 <body>
@@ -102,7 +94,7 @@
 </div>
 
 <div class="row">
-    <div class="column left middle">
+    <div class="column-left">
         <img src="figure-13-19.png" width="1199" height="962" border="0" usemap="#mymap" alt="">
         <map name="mymap" id="mymap">
             <area shape="rect" coords="115,88,225,168"
@@ -269,7 +261,7 @@
                   target="map1"/>
         </map>
     </div>
-    <div class="column right">
+    <div class="column-right">
         <div id="iframe1">
             <iframe seamless src="open-practices-frame.html" name="map1" id="map1"></iframe>
         </div>
