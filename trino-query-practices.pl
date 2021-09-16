@@ -4,7 +4,7 @@ use Convert::Base32;
 
 #
 # Generate a query we can run in trino / superset for all practies
-# Need to base32 adhoc queries. Using attachment search aggrgator.
+# Need to base32 adhoc queries. Using attachment search aggregator.
 #
 
 my @practices;

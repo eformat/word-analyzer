@@ -159,3 +159,12 @@ Deploy application
 helm repo add eformat https://eformat.github.io/helm-charts
 helm upgrade --install word-analyzer eformat/word-analyzer
 ```
+
+## Generate Trino query
+
+[Trino](https://trino.io/) querying onto [Elasticsearch](https://trino.io/docs/current/connector/elasticsearch.html)
+
+```bash
+./trino-query-practices.pl > trino-query.sql
+trino --server https://$(oc -n opendatahub-trino get route trino-route --template='{{ .spec.host }}') -f trino-query.sql
+```
