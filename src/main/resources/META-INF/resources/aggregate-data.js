@@ -16,7 +16,7 @@ function getData() {
             var margin = {
                 top: 50,
                 bottom: 100,
-                left: 30,
+                left: 60,
                 right: 20
             };
             var width = w - margin.left - margin.right;
@@ -41,6 +41,15 @@ function getData() {
                 .attr("id", "chart")
                 .attr("width", w)
                 .attr("height", h);
+
+            svg.append("text")
+                .attr("class", "y label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("[count] if term exists in a weekly report");
 
             svg.append("g")
                 .attr("class", "axis")
