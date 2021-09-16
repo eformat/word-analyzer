@@ -6,6 +6,9 @@ Do some analysis, expose example api and web pages.
 
 ![images/word-analyzer.png](images/word-analyzer.png)
 
+Also see:
+- https://github.com/eformat/document-loader-service
+
 ## Example usage
 
 Run elastic stack locally
