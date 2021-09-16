@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>document-analyzer</title>
+    <title>practice-aggregate</title>
     <style>
         h1, h2, h3, h4, h5, h6 {
             margin-bottom: 0.5rem;
@@ -62,8 +62,8 @@
 
         .left-column {
             padding: .75rem;
-            max-width: 75%;
-            min-width: 55%;
+            max-width: 100%;
+            min-width: 100%;
         }
 
         .right-column {
@@ -104,28 +104,43 @@
         .example-code h3 {
             font-weight: 200;
         }
+
+        .spinner {
+            margin: 10px;
+            display: none;
+        }
+
     </style>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"
+            integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.1/showdown.min.js" integrity="sha384-Mcx6WhltjdlkIwTWetAJIBNgD0lLtUcl//A7Ksp/vmVZVD2rzQ949wtmoehrDJd/" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="banner lead">
-    Welcome to Document Analyzer !
+    Welcome to Open Practice Aggregate !
 </div>
 
 <div class="container">
     <div class="left-column">
-        <p class="lead">This page is served by Quarkus</p>
-        <ul>
-            <li><a href="/open-practices.html">Search Open Practices</a></li>
-            <li><a href="/aggregate.html">Display Open Practice Aggregates</a></li>
-            <li><a href="/search.html">Search Reports</a></li>
-            <li><a href="/q/graphql-ui">Open GraphQL Web-UI</a></li>
-            <li><a href="/q/swagger-ui">Open API Documentation</a></li>
-            <li><a href="/q/health">Health</a></li>
-            <li><a href="/q/metrics">Metrics</a></li>
-        </ul>
+        <div>
+            <p class="lead">📚 Practices Histogram 📚</p>
+            <p>Click Refresh Data to get the latest results.</p>
+        </div>
+        <button id="getData"> Refresh Data</button>
+        <button id="byKey"> Sort by Key</button>
+        <button id="byValue"> Sort by Value</button>
+        <div id="spinner" class="spinner">
+            <img src="spinner.gif"/>
+        </div>
+        <div id="chart">
+        </div>
     </div>
 </div>
-
+<script src="aggregate-data.js"/>
+<script>$().ready()</script>
 </body>
 </html>
