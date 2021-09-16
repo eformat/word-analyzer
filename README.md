@@ -167,6 +167,8 @@ helm upgrade --install word-analyzer eformat/word-analyzer
 
 [Trino](https://trino.io/) querying onto [Elasticsearch](https://trino.io/docs/current/connector/elasticsearch.html)
 
+Trino/ODH deployed from [HERE](https://github.com/eformat/document-loader-service/tree/main/odh)
+
 ```bash
 ./trino-query-practices.pl > trino-query.sql
 trino --server https://$(oc -n opendatahub-trino get route trino-route --template='{{ .spec.host }}') -f trino-query.sql
