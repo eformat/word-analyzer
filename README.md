@@ -2,7 +2,9 @@
 
 Index .pdf|.docx documents using Elasticsearch and an ingestion data pipeline and the *ingest-attachment* bash plugin.
 
-Do some simple analysis, expose example api and web page.
+Do some analysis, expose example api and web pages.
+
+![images/word-analyzer.png](images/word-analyzer.png)
 
 ## Example usage
 
