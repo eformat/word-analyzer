@@ -118,7 +118,7 @@ public class SearchAggregate {
                         new Count(resultSet.getMetaData().getColumnName(47), resultSet.getInt("cnt_team_identity")),
                         new Count(resultSet.getMetaData().getColumnName(48), resultSet.getInt("cnt_definition_of_ready")),
                         new Count(resultSet.getMetaData().getColumnName(49), resultSet.getInt("cnt_definition_of_done")),
-                        new Count(resultSet.getMetaData().getColumnName(50), resultSet.getInt("cnt_accceptance_criteria")),
+                        new Count(resultSet.getMetaData().getColumnName(50), resultSet.getInt("cnt_acceptance_criteria")),
                         new Count(resultSet.getMetaData().getColumnName(51), resultSet.getInt("cnt_foundation")),
                         new Count(resultSet.getMetaData().getColumnName(52), resultSet.getInt("cnt_options"))
                 );
