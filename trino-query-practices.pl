@@ -43,7 +43,7 @@ sub getQueryString() {
     return $query_string;
 }
 
-my $top = q[select value(*) as cnt_total,];
+my $top = q[select count(*) as cnt_total,];
 my $prefix = q[select json_extract(result, '$.hits.total.value') from elasticsearch.default."engagements-read$query:];
 my $bottom = q[from elasticsearch.default."engagements-read" e;];
 
