@@ -69,7 +69,7 @@ public class SearchAggregate {
         static GeneralResponse from(ResultSet resultSet) {
             try {
                 return new GeneralResponse(
-                        //new Count(resultSet.getMetaData().getColumnName(1), resultSet.getInt("cnt_total")),
+                        new Count(resultSet.getMetaData().getColumnName(1), resultSet.getInt("cnt_total")),
                         new Count(resultSet.getMetaData().getColumnName(2), resultSet.getInt("cnt_event_storming")),
                         new Count(resultSet.getMetaData().getColumnName(3), resultSet.getInt("cnt_impact_mapping")),
                         new Count(resultSet.getMetaData().getColumnName(4), resultSet.getInt("cnt_empathy_mapping")),

@@ -11,6 +11,12 @@ function getData() {
             $('#spinner').hide()
             var data = d.data;
 
+            const index = data.findIndex(x => x.key === "cnt_total");
+            var total = data.slice(index, 1)[0];
+            if (index > -1) {
+              data.splice(index, 1);
+            }
+
             var w = 1400;
             var h = 600;
             var margin = {
@@ -50,6 +56,12 @@ function getData() {
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
                 .text("[count] if term exists in a weekly report");
+
+            svg.append("text")
+                    .attr("x", (width / 2))
+                    .attr("y", 20)
+                    .attr("text-anchor", "middle")
+                    .text("Total Weekly Reports - " + total.value);
 
             svg.append("g")
                 .attr("class", "axis")
@@ -207,3 +219,4 @@ function getData() {
         }
     });
 }
+
