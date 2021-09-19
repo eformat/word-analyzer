@@ -160,7 +160,7 @@ oc -n engagements-dev create secret generic word-analyzer \
 Deploy application
 ```bash
 helm repo add eformat https://eformat.github.io/helm-charts
-helm upgrade --install word-analyzer eformat/word-analyzer
+helm upgrade --install word-analyzer eformat/word-analyzer --namespace engagements-dev 
 ```
 
 ## Generate Trino query
