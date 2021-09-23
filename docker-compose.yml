@@ -20,3 +20,11 @@ services:
       - '5601:5601'
     depends_on:
       - 'elasticsearch'
+
+  trino:
+    image: 'trinodb/trino:latest'
+    container_name: trino
+    ports:
+      - '8088:8088'
+    volumes:
+      - ./trino:/etc/trino

@@ -8,7 +8,7 @@ use Convert::Base32;
 #
 
 my @practices;
-my $file = 'trino-practice-list';
+my $file = 'src/main/resources/trino-practice-list';
 open my $handle, "<$file" || die "cant open $file $!";
 chomp(@practices = <$handle>);
 close $handle;
@@ -26,7 +26,7 @@ sub getQueryString() {
          }
        },
        "aggregations": {
-         "event_storming": {
+         "practices": {
            "sampler": {
                   "shard_size": 100
            },
@@ -45,7 +45,7 @@ sub getQueryString() {
 
 my $top = q[select count(*) as cnt_total,];
 my $prefix = q[select json_extract(result, '$.hits.total.value') from elasticsearch.default."engagements-read$query:];
-my $bottom = q[from elasticsearch.default."engagements-read" e;];
+my $bottom = q[from elasticsearch.default."engagements-read" e];
 
 my $counter;
 print $top;

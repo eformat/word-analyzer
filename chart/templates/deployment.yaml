@@ -51,6 +51,11 @@ spec:
               value: {{ .Values.elasticsearch_protocol | quote }}
           image: ' '
           imagePullPolicy: Always
+          volumeMounts:
+            - name: engagements-config
+              readOnly: true
+              mountPath: /var/tmp/engagements
+              subPath: engagements
           name: {{ include "word-analyzer.name" . }}
           livenessProbe:
             httpGet:
@@ -89,4 +94,9 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+        - name: engagements-config
+          configMap:
+            name: {{ include "word-analyzer.fullname" . }}
+            defaultMode: 511
 {{ end }}

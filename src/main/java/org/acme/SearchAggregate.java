@@ -12,7 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 @Path("/")
@@ -33,7 +34,7 @@ public class SearchAggregate {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(operationId = "aggregate", summary = "trino query", description = "This operation returns aggregate search for all practices using trino", deprecated = false, hidden = false)
     public javax.ws.rs.core.Response allpractice() throws Exception {
-        String query = ApplicationUtils.readFile("/trino-query.sql");
+        String query = ApplicationUtils.readFile("/trino-query-practices.sql");
         QueryAndList<GeneralResponse> response = QueryAndList.from(dataSource, query, GeneralResponse::from);
         return javax.ws.rs.core.Response.ok().entity(response.data.get(0)).build();
     }

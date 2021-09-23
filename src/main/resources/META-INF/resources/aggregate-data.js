@@ -3,10 +3,11 @@ document.getElementById("getData").onclick = function() {
     getData()
 };
 function getData() {
-    console.log("calling...")
     $('#spinner').show()
+    var uuid = $('#uuid').val();
+    //console.log("calling uuid: ", uuid)
     $.ajax({
-        url: '/aggregate',
+        url: (uuid ? '/aggregate-for-engagement?uuid=' + uuid : '/aggregate'),
         success: function(d) {
             $('#spinner').hide()
             var data = d.data;

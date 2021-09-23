@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,22 @@ public class ApplicationUtils {
                     .collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {
             log.warn(">>> Caught exception whilst reading file (" + fileName + ") " + e);
+            return contents;
+        }
+        fileCache.put(fileName, contents);
+        return contents;
+    }
+
+    public static String readFileFS(String fileName) {
+        String contents = null;
+        if (fileCache.containsKey(fileName)) {
+            return fileCache.get(fileName);
+        }
+        try {
+            contents = new String(Files.readAllBytes(Paths.get(fileName)));
+        } catch (IOException e) {
+            log.warn(">>> Caught exception whilst reading file (" + fileName + ") " + e);
+            return contents;
         }
         fileCache.put(fileName, contents);
         return contents;

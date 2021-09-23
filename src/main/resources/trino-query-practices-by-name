@@ -1,0 +1,41 @@
+{
+  "_source": [
+    "filename",
+    "url",
+    "uuid"
+  ],
+  "query": {
+    "match_phrase": {
+      "attachment.content": "<PRACTICE>"
+    }
+  },
+  "post_filter": {
+    "bool": {
+      "must": [
+        {
+          "simple_query_string": {
+            "query": "<UUID>",
+            "default_operator": "and",
+            "fields": [
+              "uuid"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "aggregations": {
+    "practices": {
+      "sampler": {
+        "shard_size": 100
+      },
+      "aggregations": {
+        "keywords": {
+          "significant_text": {
+            "field": "attachment.content"
+          }
+        }
+      }
+    }
+  }
+}

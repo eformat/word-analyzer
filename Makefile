@@ -4,8 +4,12 @@ REPOSITORY ?= $(REGISTRY)/eformat/word-analyzer
 
 IMG := $(REPOSITORY):latest
 
+# dont package this
+clean:
+	rm -f src/main/resources/engagement-list
+
 # clean compile
-compile:
+compile: clean
 	mvn clean package -DskipTests
 
 # Podman Login

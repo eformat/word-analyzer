@@ -170,6 +170,6 @@ helm upgrade --install word-analyzer eformat/word-analyzer --namespace engagemen
 Trino/ODH deployed from [HERE](https://github.com/eformat/document-loader-service/tree/main/odh)
 
 ```bash
-./trino-query-practices.pl > trino-query.sql
-trino --server https://$(oc -n opendatahub-trino get route trino-route --template='{{ .spec.host }}') -f trino-query.sql
+./trino-query-practices.pl > trino-query-practices.sql
+trino --server https://$(oc -n opendatahub-trino get route trino-route --template='{{ .spec.host }}') -f trino-query-practices.sql
 ```
