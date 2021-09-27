@@ -98,7 +98,8 @@ public class SearchAggregateByEngagement {
         String query = ApplicationUtils.readFile("/trino-query-practices-by-name");
         String colName = "cnt_" + term.replace(" ", "_")
                 .replace("\\", "").replace("/", "_")
-                .replace("&", "_");
+                .replace("&", "_").replace("'", "")
+                .replace("!", "");
         query = query.replace("<PRACTICE>", term);
         // for now use old method for query all
         if (uuid.equalsIgnoreCase("999")) {
