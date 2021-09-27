@@ -5,9 +5,13 @@ document.getElementById("getData").onclick = function() {
 function getData() {
     $('#spinner').show()
     var uuid = $('#uuid').val();
+     var terms = $('#terms').val();
     //console.log("calling uuid: ", uuid)
     $.ajax({
-        url: (uuid ? '/aggregate-for-engagement?uuid=' + uuid : '/aggregate'),
+        type: 'POST',
+        data: terms,
+        contentType: 'text/plain',
+        url: '/aggregate-for-engagement?uuid=' + uuid,
         success: function(d) {
             $('#spinner').hide()
             var data = d.data;

@@ -114,6 +114,11 @@
             min-width: 270px;
         }
 
+        textarea {
+            min-width: 270px;
+            resize: vertical;
+        }
+
         .dropdown {
           position: relative;
           display: inline-block;
@@ -161,12 +166,22 @@
             <p class="lead">📚 Practices Aggregates 📚</p>
             <p>Click Refresh Data to get the latest results.</p>
         </div>
-        <p>Choose an Engagement by typing a name into the text box and selecting:</p>
+        <p>Choose an Engagement by typing a name into the text box and selecting (default is ALL):</p>
         <div class="dropdown">
             <div id="myDropdown" class="dropdown-content">
                 <input type="hidden" id="uuid" value="999">
                 <input type="text" placeholder="ALL" id="myInput" onkeyup="engagementFunction()" autocomplete="off">
             </div>
+        </div>
+        <p>Choose a list of terms to search for (delete all terms to search using the default set):</p>
+        <div>
+            <textarea id="terms" name="terms" rows="4" cols="32" maxlength="1000">
+social contract
+event storming
+impact mapping
+ci/cd
+performance testing
+            </textarea>
         </div>
         <div>
             <button id="getData"> Refresh Data</button>
