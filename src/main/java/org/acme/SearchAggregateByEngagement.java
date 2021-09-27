@@ -66,7 +66,7 @@ public class SearchAggregateByEngagement {
             }
         }
         completeQuery.append(" from elasticsearch.default.\"engagements-read\" e");
-        log.info(">> completeQuery: " + completeQuery);
+        log.debug(">> completeQuery: " + completeQuery);
         QueryAndList<GeneralResponse> response = QueryAndList.from(dataSource, completeQuery.toString(), GeneralResponse::from);
         return javax.ws.rs.core.Response.ok().entity(response.data.get(0)).build();
     }
