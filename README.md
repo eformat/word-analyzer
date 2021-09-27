@@ -33,7 +33,7 @@ Elasticsearch deployed from [HERE](https://github.com/eformat/document-loader-se
 Create Secrets
 ```bash
 oc -n engagements-dev create secret generic word-analyzer \
-  --from-literal=elastic-password=$(oc get secret engagements-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 -d)
+  --from-literal=elastic-password=$(oc -n engagements-dev get secret engagements-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 -d)
 ```
 
 Deploy application
