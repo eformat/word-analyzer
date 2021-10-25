@@ -44,7 +44,7 @@ helm upgrade --install word-analyzer eformat/word-analyzer --namespace engagemen
 
 Note: the engagements list is created separately and not checked in e.g.
 ```bash
-oc apply -f ~/tmp/engagement-list-cm.yaml
+oc -n engagements-dev apply -f ~/tmp/engagement-list-cm.yaml
 ```
 
 ## Generate Trino query

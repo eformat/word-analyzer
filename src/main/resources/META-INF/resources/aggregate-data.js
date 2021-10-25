@@ -5,7 +5,7 @@ document.getElementById("getData").onclick = function() {
 function getData() {
     $('#spinner').show()
     var uuid = $('#uuid').val();
-     var terms = $('#terms').val();
+    var terms = $('#terms').val();
     //console.log("calling uuid: ", uuid)
     $.ajax({
         type: 'POST',
