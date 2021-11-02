@@ -49,6 +49,8 @@ spec:
                   name: {{ include "word-analyzer.fullname" . }}
             - name: QUARKUS_ELASTICSEARCH_PROTOCOL
               value: {{ .Values.elasticsearch_protocol | quote }}
+            - name: WORD_ANALYZER_GRAPHQL
+              value: http://{{ include "word-analyzer.fullname" . }}:8080/graphql
           image: ''
           imagePullPolicy: Always
           volumeMounts:
