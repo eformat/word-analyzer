@@ -42,11 +42,6 @@ helm repo add eformat https://eformat.github.io/helm-charts
 helm upgrade --install word-analyzer eformat/word-analyzer --namespace engagements-dev 
 ```
 
-Note: the engagements list is created separately and not checked in e.g.
-```bash
-oc -n engagements-dev apply -f ~/tmp/engagement-list-cm.yaml
-```
-
 ## Generate Trino query
 
 [Trino](https://trino.io/) querying onto [Elasticsearch](https://trino.io/docs/current/connector/elasticsearch.html)
