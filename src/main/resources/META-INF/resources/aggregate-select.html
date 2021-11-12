@@ -166,6 +166,17 @@
             <p class="lead">📚 Practices Aggregates 📚</p>
             <p>Click Refresh Data to get the latest results.</p>
         </div>
+        <p>You will need to set a Token to see specific Engagements:</p>
+        <div class="auth-form">
+            <div class="team-inputs">
+                <label for="token">Token</label>
+                <input type="password" id="token" name="token" placeholder="Authorize">
+            </div>
+            <div class="">
+                <button class="storage-btns" onclick="setTokenInStorage()">Save</button>
+                <button class="storage-btns" onclick="clearStorage()">Clear</button>
+            </div>
+        </div>
         <p>Choose an Engagement by typing a name into the text box and selecting (default is ALL):</p>
         <div class="dropdown">
             <div id="myDropdown" class="dropdown-content">
