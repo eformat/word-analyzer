@@ -44,7 +44,7 @@ public class EngagementList {
     @GET
     @Blocking
     @Path("/engagements")
-     @SecurityRequirement(name = "jwt", scopes = {})
+    @SecurityRequirement(name = "jwt", scopes = {})
     @Operation(operationId = "engagements", summary = "all engagement list query", description = "This operation returns a list of engagements", deprecated = false, hidden = false)
     public javax.ws.rs.core.Response engagements() throws Exception {
         if (cache.getIfPresent("engagements") != null) {
