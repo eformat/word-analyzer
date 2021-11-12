@@ -1,7 +1,6 @@
 function engagementFunction() {
     document.getElementById("token").value = localStorage.getItem('TOKEN') ? localStorage.getItem('TOKEN') : '';
     $.ajax({
-        type: "GET",
         url: '/engagements',
         beforeSend: function (xhr) {
           xhr.setRequestHeader('Authorization', 'Bearer ' + document.getElementById("token").value);
@@ -60,7 +59,7 @@ function engagementFunction() {
     });
 }
 function setTokenInStorage () {
-    let token = document.getElementById('token').value.toLowerCase();
+    let token = document.getElementById('token').value;
     localStorage.setItem('TOKEN', token);
 }
 function clearStorage () {
