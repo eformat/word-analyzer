@@ -1,12 +1,17 @@
 package org.acme;
 
 import io.smallrye.common.annotation.Blocking;
+import io.trino.jdbc.$internal.guava.cache.Cache;
+import io.trino.jdbc.$internal.guava.cache.CacheBuilder;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.parsetools.JsonParser;
 import org.acme.rest.client.EngagementClient;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
@@ -17,16 +22,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@SecurityScheme(securitySchemeName = "jwt", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "jwt")
 public class EngagementList {
 
     @Inject
     @RestClient
     EngagementClient engagementClient;
+
+    Cache<String, String> cache = CacheBuilder.newBuilder()
+            .expireAfterAccess(5, TimeUnit.MINUTES).build();
 
     static record Engagement(String uuid, String name) {
     }
@@ -34,16 +44,21 @@ public class EngagementList {
     @GET
     @Blocking
     @Path("/engagements")
+     @SecurityRequirement(name = "jwt", scopes = {})
     @Operation(operationId = "engagements", summary = "all engagement list query", description = "This operation returns a list of engagements", deprecated = false, hidden = false)
     public javax.ws.rs.core.Response engagements() throws Exception {
+        if (cache.getIfPresent("engagements") != null) {
+            return Response.ok().entity(mapResponse(cache.asMap().get("engagements"))).build();
+        }
         ArrayList<Engagement> engagements = mapResponse(engagementClient.getAllEngagements());
         return Response.ok().entity(engagements).build();
     }
 
     private ArrayList<Engagement> mapResponse(String engagements) {
+        cache.put("engagements", engagements);
         Object e = parse(Buffer.buffer(engagements));
         final ArrayList<Engagement> eg = new ArrayList<>();
-        final Iterator<Object> i = ((JsonArray)e).iterator();
+        final Iterator<Object> i = ((JsonArray) e).iterator();
         while (i.hasNext()) {
             final JsonObject element = (JsonObject) i.next();
             eg.add(new Engagement(element.getString("uuid"), element.getString("customer_name").concat(" - ").concat(element.getString("project_name"))));
@@ -89,4 +104,5 @@ public class EngagementList {
         }
         return res;
     }
+
 }
