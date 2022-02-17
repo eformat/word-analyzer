@@ -22,9 +22,10 @@ services:
       - 'elasticsearch'
 
   trino:
-    image: 'trinodb/trino:latest'
+    image: 'docker.io/trinodb/trino:latest'
     container_name: trino
     ports:
       - '8088:8088'
     volumes:
       - ./trino:/etc/trino
+      - ./trino/data:/data/trino

@@ -43,3 +43,7 @@ allure-results
 *~
 src/main/resources/engagement-list
 _Deparsed_XSubs.pm
+!trino/data/.gitkeep
+trino/data/etc
+trino/data/var
+trino/data/plugin
