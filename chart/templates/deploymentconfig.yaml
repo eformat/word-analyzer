@@ -51,6 +51,8 @@ spec:
               value: {{ .Values.elasticsearch_protocol | quote }}
             - name: WORD_ANALYZER_GRAPHQL
               value: http://{{ include "word-analyzer.fullname" . }}:8080/graphql
+            - name: TRINO_SERVICE
+              value: {{ .Values.trino_service | quote }}
           image: ''
           imagePullPolicy: Always
           name: {{ include "word-analyzer.name" . }}

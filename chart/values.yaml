@@ -26,3 +26,5 @@ elasticsearch_username: elastic
 elasticsearch_protocol: http
 # app logs
 log_level: INFO
+# trino
+trino_service: trino-service.opendatahub-trino.svc.cluster.local:8080
